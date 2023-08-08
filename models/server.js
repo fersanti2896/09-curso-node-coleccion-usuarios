@@ -12,7 +12,6 @@ class Server {
         this.connectionDB();
         /* Middlewares */
         this.middlewares();
-
         /* Rutas de mi aplicación */
         this.routes();
     }
@@ -23,7 +22,7 @@ class Server {
 
     middlewares() {
         /* CORS */
-        this.app.use(cors())
+        this.app.use( cors() );
         /* Lectura y Parseo del Body */
         this.app.use( express.json() );
         /* Directorio Público */
@@ -31,7 +30,7 @@ class Server {
     }
 
     routes() {
-        this.app.use( this.usuariosPath, require('../routes/user') )
+        this.app.use( this.usuariosPath, require('../routes/user') );
     }
 
     listen() {
