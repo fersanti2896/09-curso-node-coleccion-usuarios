@@ -47,7 +47,7 @@ const usuariosPUT = async(req, res = response) => {
     }
 
     /* Actualiza el registro */
-    const usuario = await Usuario.findByIdAndUpdate( id, resto );
+    const usuario = await Usuario.findByIdAndUpdate( id, resto, { new: true } );
 
     res.status(200).json({
         usuario
