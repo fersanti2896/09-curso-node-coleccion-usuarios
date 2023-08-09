@@ -20,15 +20,7 @@ const usuariosGET = (req, res = response) => {
 const usuariosPOST = async(req, res = response) => {
     const { name, email, password, role } = req.body;
     const usuario = new Usuario({ name, email, password, role });
-
-    /* Verificando si el email existe */
-    const existEmail = await Usuario.findOne({ email });
-
-    if( existEmail ) {
-        return res.status(400).json({
-            msg: 'El correo ya existe en otra cuenta.'
-        });
-    } 
+    
     /* Encriptando la contraseña */
     const salt = bcryptjs.genSaltSync();
     usuario.password = bcryptjs.hashSync( password, salt );
