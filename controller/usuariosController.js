@@ -54,9 +54,17 @@ const usuariosPUT = async(req, res = response) => {
     });
 }
 
-const usuariosDELETE = (req, res = response) => {
-    res.json({
-        msg: "DELETE API - Controlador"
+const usuariosDELETE = async(req, res = response) => {
+    const { id } = req.params;
+
+    /* Borrado físico, es decir, borra de BD */
+    // const usuario = await Usuario.findByIdAndDelete(id);
+
+    /* Borrado lógico */
+    const usuario = await Usuario.findByIdAndUpdate( id, { status: false }, { new: true } );
+
+    res.status(200).json({
+        usuario
     });
 }
 
