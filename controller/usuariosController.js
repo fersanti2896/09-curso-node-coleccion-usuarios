@@ -8,7 +8,6 @@ const usuariosGET = (req, res = response) => {
     const { q, name = 'Not found name', apikey, page = 1, limit } = req.query;
 
     res.status(200).json({
-        msg: "GET API - Controlador",
         q, 
         name,
         apikey,
@@ -27,17 +26,27 @@ const usuariosPOST = async(req, res = response) => {
     /* Se guarda en BD */    
     await usuario.save();
 
-    res.status(201).json({
+    res.status(200).json({
         usuario
     });
 }
 
-const usuariosPUT = (req, res = response) => {
+const usuariosPUT = async(req, res = response) => {
     const { id } = req.params;
+    const { _id, password, google, email, ...resto } = req.body;
 
-    res.json({
-        msg: "PUT API - Controlador",
-        id
+    // TODO: Validar contra base de datos
+    if( password ) {
+        /* Encriptando la contraseña */
+        const salt = bcryptjs.genSaltSync();
+        resto.password = bcryptjs.hashSync( password, salt );
+    }
+
+    /* Actualiza el registro */
+    const usuario = await Usuario.findByIdAndUpdate( id, resto );
+
+    res.status(200).json({
+        usuario
     });
 }
 
